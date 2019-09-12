@@ -12,7 +12,7 @@ class App extends Component {
     state = {
         notes: [],
         folders: [],
-        deleteNote: this.handleDelete,
+        deleteNote: this.deleteNote,
     };
 
     setFolders(folders) {
@@ -42,22 +42,7 @@ class App extends Component {
             .then(data => this.setNotes(data))
     }
 
-    handleDelete(noteId) {
-        fetch(`http://localhost:9090/notes/${noteId}`, {
-            method: 'DELETE',
-            headers: {
-                'content-type': 'application/json'
-            },
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(this)
-                // const updatedList = this.state.notes.filter(note => note.id !== noteId);
-                // this.setState({notes: updatedList});
-            })
-    }
-
-    removeNote(noteId) {
+    deleteNote = (noteId) => {
         const updatedList = this.state.notes.filter(note => note.id !== noteId);
         this.setState({notes: updatedList});
     }
@@ -108,7 +93,7 @@ class App extends Component {
                 value={{
                     notes: this.state.notes,
                     folders: this.state.folders,
-                    deleteNote: this.state.deleteNote
+                    deleteNote: this.deleteNote
                 }}>
 
                 <div className="App">
